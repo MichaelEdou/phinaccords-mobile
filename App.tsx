@@ -22,7 +22,7 @@ const Button = ({ children, onClick, className = "", variant = "primary", fullWi
     );
 };
 
-const Input = ({ label, type = "text", placeholder, icon }: any) => (
+const Input = ({ label, icon, className, ...props }: any) => (
     <div className="group relative">
         {label && <label className="block text-sm font-semibold text-gray-900 dark:text-gray-100 mb-2 pl-1">{label}</label>}
         <div className="relative">
@@ -32,9 +32,8 @@ const Input = ({ label, type = "text", placeholder, icon }: any) => (
                 </div>
             )}
             <input 
-                type={type}
-                className={`block w-full rounded-xl border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-surface-dark py-4 ${icon ? 'pl-11' : 'pl-4'} pr-4 text-gray-900 dark:text-white placeholder:text-gray-400 focus:border-primary focus:ring-1 focus:ring-primary focus:bg-white dark:focus:bg-surface-dark transition-all duration-200 shadow-sm outline-none`}
-                placeholder={placeholder}
+                {...props}
+                className={`block w-full rounded-xl border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-surface-dark py-4 ${icon ? 'pl-11' : 'pl-4'} pr-4 text-gray-900 dark:text-white placeholder:text-gray-400 focus:border-primary focus:ring-1 focus:ring-primary focus:bg-white dark:focus:bg-surface-dark transition-all duration-200 shadow-sm outline-none ${className || ''}`}
             />
         </div>
     </div>
@@ -104,8 +103,7 @@ const OnboardingWelcome = () => {
             
             <div className="relative z-10 flex flex-col h-full px-6 pt-16 pb-12">
                 <div className="flex items-center justify-center gap-2">
-                    <span className="material-symbols-outlined text-primary text-4xl">music_note</span>
-                    <span className="text-white text-2xl font-extrabold tracking-tight">PhinAccords</span>
+                    <img src="/PhinAccords_logo.png" alt="PhinAccords" className="h-12 w-auto" />
                 </div>
                 
                 <div className="flex-grow"></div>
@@ -243,52 +241,164 @@ const OnboardingTranspose = () => {
 const SignIn = () => {
     const navigate = useNavigate();
     return (
-        <div className="min-h-screen bg-background-light dark:bg-background-dark flex flex-col justify-center px-6 py-12">
-             <div className="sm:mx-auto sm:w-full sm:max-w-sm mb-8 text-center">
-                <div className="inline-flex h-20 w-20 items-center justify-center rounded-2xl bg-white dark:bg-surface-dark shadow-sm mb-6">
-                     <span className="material-symbols-outlined text-4xl text-primary">piano</span>
-                </div>
-                <h2 className="text-3xl font-bold tracking-tight text-gray-900 dark:text-white">Welcome Back</h2>
-                <p className="mt-2 text-gray-500 dark:text-gray-400">Sign in to continue your lessons</p>
-             </div>
-
-             <div className="mt-4 sm:mx-auto sm:w-full sm:max-w-sm space-y-6">
-                 <Input label="Email Address" type="email" placeholder="pianist@example.com" icon="mail" />
-                 <div>
-                    <Input label="Password" type="password" placeholder="Enter your password" icon="lock" />
-                    <div className="flex justify-end mt-2">
-                        <Link to="/forgot-password" class="text-sm font-bold text-gray-500 hover:text-primary transition-colors">Forgot Password?</Link>
+        <div className="min-h-screen bg-background-light dark:bg-background-dark font-display antialiased transition-colors duration-200">
+            <div className="relative flex min-h-screen w-full flex-col justify-center overflow-hidden py-6 sm:py-12">
+                <div className="relative mx-auto w-full max-w-[420px] px-6">
+                    {/* Logo Section */}
+                    <div className="flex flex-col items-center justify-center pt-8 pb-6">
+                        <div className="h-24 w-24 overflow-hidden rounded-xl shadow-soft mb-6 bg-white dark:bg-surface-dark flex items-center justify-center relative p-4">
+                            <img className="w-full h-full object-contain" src="/logo_tab.png" alt="PhinAccords Logo" />
+                            {/* <div className="absolute inset-0 bg-primary/10"></div> */}
+                        </div>
+                        <h1 className="text-3xl font-bold text-gray-900 dark:text-white tracking-tight text-center">
+                            Welcome Back
+                        </h1>
+                        <p className="mt-2 text-base text-gray-500 dark:text-gray-400 text-center">
+                            Sign in to continue your lessons
+                        </p>
                     </div>
-                 </div>
-                 
-                 <Button onClick={() => navigate('/home')}>
-                    Sign In <span className="material-symbols-outlined">arrow_forward</span>
-                 </Button>
 
-                 <div className="relative my-6">
-                    <div className="absolute inset-0 flex items-center"><div className="w-full border-t border-gray-200 dark:border-gray-700"></div></div>
-                    <div className="relative flex justify-center"><span className="bg-background-light dark:bg-background-dark px-4 text-xs font-semibold uppercase text-gray-400">OR</span></div>
-                 </div>
+                    {/* Form Section */}
+                    <div className="mt-4 flex flex-col gap-5">
+                        {/* Email Field */}
+                        <div className="group relative">
+                            <label className="block text-sm font-semibold text-gray-900 dark:text-gray-100 mb-2 pl-1" htmlFor="email">Email Address</label>
+                            <div className="relative">
+                                <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-gray-400 group-focus-within:text-primary transition-colors">
+                                    <span className="material-symbols-outlined text-[20px]">mail</span>
+                                </div>
+                                <input 
+                                    className="block w-full rounded-lg border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-surface-dark py-4 pl-11 pr-4 text-gray-900 dark:text-white placeholder:text-gray-400 focus:border-primary focus:ring-primary/20 focus:bg-white dark:focus:bg-surface-dark transition-all duration-200 shadow-sm outline-none" 
+                                    id="email" 
+                                    placeholder="pianist@example.com" 
+                                    type="email" 
+                                />
+                            </div>
+                        </div>
 
-                 <div className="grid grid-cols-2 gap-4">
-                    <button className="flex items-center justify-center gap-2 bg-white dark:bg-surface-dark border border-gray-200 dark:border-gray-700 rounded-lg py-3 text-sm font-semibold text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-800">
-                        <span className="material-icons">play_arrow</span> Google
-                    </button>
-                    <button className="flex items-center justify-center gap-2 bg-white dark:bg-surface-dark border border-gray-200 dark:border-gray-700 rounded-lg py-3 text-sm font-semibold text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-800">
-                        <span className="material-icons">apple</span> Apple
-                    </button>
-                 </div>
+                        {/* Password Field */}
+                        <div className="group relative">
+                            <label className="block text-sm font-semibold text-gray-900 dark:text-gray-100 mb-2 pl-1" htmlFor="password">Password</label>
+                            <div className="relative">
+                                <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-gray-400 group-focus-within:text-primary transition-colors">
+                                    <span className="material-symbols-outlined text-[20px]">lock</span>
+                                </div>
+                                <input 
+                                    className="block w-full rounded-lg border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-surface-dark py-4 pl-11 pr-4 text-gray-900 dark:text-white placeholder:text-gray-400 focus:border-primary focus:ring-primary/20 focus:bg-white dark:focus:bg-surface-dark transition-all duration-200 shadow-sm outline-none" 
+                                    id="password" 
+                                    placeholder="Enter your password" 
+                                    type="password" 
+                                />
+                            </div>
+                        </div>
 
-                 <p className="text-center text-gray-500 dark:text-gray-400 text-sm">
-                    Don't have an account? <Link to="/signup" className="font-bold text-primary hover:underline">Sign Up</Link>
-                 </p>
-             </div>
+                        {/* Forgot Password */}
+                        <div className="flex justify-end">
+                            <Link to="/forgot-password" className="text-sm font-bold text-gray-500 hover:text-primary dark:text-gray-400 dark:hover:text-primary transition-colors">
+                                Forgot Password?
+                            </Link>
+                        </div>
+
+                        {/* Sign In Button */}
+                        <button 
+                            onClick={() => navigate('/home')}
+                            className="relative mt-2 flex w-full items-center justify-center overflow-hidden rounded-lg bg-primary py-4 text-base font-bold text-white shadow-glow transition-transform hover:scale-[1.02] active:scale-[0.98]"
+                        >
+                            <span className="mr-2">Sign In</span>
+                            <span className="material-symbols-outlined text-lg">arrow_forward</span>
+                        </button>
+                    </div>
+
+                    {/* Divider */}
+                    <div className="relative mt-8 mb-6">
+                        <div aria-hidden="true" className="absolute inset-0 flex items-center">
+                            <div className="w-full border-t border-gray-200 dark:border-gray-700"></div>
+                        </div>
+                        <div className="relative flex justify-center">
+                            <span className="bg-background-light dark:bg-background-dark px-4 text-xs font-semibold uppercase tracking-wider text-gray-400">
+                                OR
+                            </span>
+                        </div>
+                    </div>
+
+                    {/* Social Logins */}
+                    <div className="grid grid-cols-2 gap-4">
+                        <button className="flex items-center justify-center gap-3 rounded-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-surface-dark py-3.5 px-4 text-gray-700 dark:text-white transition-colors hover:bg-gray-50 dark:hover:bg-gray-800 focus:ring-2 focus:ring-gray-200 dark:focus:ring-gray-700">
+                            <img alt="Google" className="h-5 w-5" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBemNXRf46aWydSPAk1d3fSogHVWDZvqcmfuVzTPsCn1xL2dKJPP44UVnhOkkKeDGlGoiugk-bKhngMzjpZ-eQALadbu5AKzf0qXPqvCR9vdZnRxb5hF8zipfV1Pd3D5hoiiEoAe1NvtkEyba6_m1uj9BhG12No_WdUl9T1bcsM7WV8AMWvbJ_IMhsS3J3vCLIMK9qz5J6ZFUe_TU1fjrvc9ppFldS6eLWgxAsnPprYOlW3THxdnnJOCcU88CoiLq6Z9bsYtGJGPXYS"/>
+                            <span className="text-sm font-semibold">Google</span>
+                        </button>
+                        <button className="flex items-center justify-center gap-3 rounded-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-surface-dark py-3.5 px-4 text-gray-700 dark:text-white transition-colors hover:bg-gray-50 dark:hover:bg-gray-800 focus:ring-2 focus:ring-gray-200 dark:focus:ring-gray-700">
+                            <span className="material-symbols-outlined text-[22px]">android</span> {/* Changed to android for generic mobile feel, or apple as requested */}
+                            {/* <span className="material-symbols-outlined text-[22px]">ios</span> Use apple icon if we had it, simulating with text or generic icon */}
+                            <span className="text-sm font-semibold">Apple</span>
+                        </button>
+                    </div>
+
+                    {/* Footer Link */}
+                    <div className="mt-10 text-center">
+                        <p className="text-gray-600 dark:text-gray-400">
+                            Don't have an account? 
+                            <Link to="/signup" className="font-bold text-primary hover:underline ml-1">Sign Up</Link>
+                        </p>
+                    </div>
+                </div>
+            </div>
         </div>
     );
 };
 
 const SignUp = () => {
     const navigate = useNavigate();
+    const [isLoading, setIsLoading] = useState(false);
+    const [formData, setFormData] = useState({
+        name: '',
+        email: '',
+        password: ''
+    });
+
+    const handleChange = (e: any) => {
+        setFormData({ ...formData, [e.target.name]: e.target.value });
+    };
+
+    const handleSignUp = async () => {
+        if (!formData.name || !formData.email || !formData.password) {
+            alert("Please fill in all fields");
+            return;
+        }
+
+        setIsLoading(true);
+        try {
+            // Using the environment variable or fallback to localhost directly for dev if env is missing
+            // Ideally this should come from import.meta.env.VITE_API_URL
+            // For now, hardcoding the production URL as requested or localhost:3001 if backend is running there
+            const API_URL = import.meta.env.VITE_API_URL || "https://phinaccords.com"; // Adjust if local backend is needed
+            
+            const response = await fetch(`${API_URL}/api/mobile/auth/register`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(formData),
+            });
+
+            const data = await response.json();
+
+            if (!response.ok) {
+                throw new Error(data.error || 'Registration failed');
+            }
+
+            // Success
+            alert("Account created successfully!");
+            // Save token if needed: localStorage.setItem('token', data.token);
+            navigate('/home');
+
+        } catch (error: any) {
+            alert(error.message);
+        } finally {
+            setIsLoading(false);
+        }
+    };
+
     return (
         <div className="min-h-screen bg-background-light dark:bg-background-dark flex flex-col justify-center px-6 py-12">
              <div className="sm:mx-auto sm:w-full sm:max-w-sm mb-8 text-center">
@@ -299,9 +409,32 @@ const SignUp = () => {
              </div>
 
              <div className="mt-4 sm:mx-auto sm:w-full sm:max-w-sm space-y-5">
-                 <Input label="Full Name" placeholder="Enter your full name" icon="person" />
-                 <Input label="Email Address" type="email" placeholder="name@example.com" icon="mail" />
-                 <Input label="Password" type="password" placeholder="Create a password" icon="lock" />
+                 <Input 
+                    label="Full Name" 
+                    name="name"
+                    value={formData.name}
+                    onChange={handleChange}
+                    placeholder="Enter your full name" 
+                    icon="person" 
+                />
+                 <Input 
+                    label="Email Address" 
+                    type="email" 
+                    name="email"
+                    value={formData.email}
+                    onChange={handleChange}
+                    placeholder="name@example.com" 
+                    icon="mail" 
+                />
+                 <Input 
+                    label="Password" 
+                    type="password" 
+                    name="password"
+                    value={formData.password}
+                    onChange={handleChange}
+                    placeholder="Create a password" 
+                    icon="lock" 
+                />
                  
                  <div className="flex items-start">
                     <input type="checkbox" className="mt-1 h-4 w-4 rounded border-gray-300 text-primary focus:ring-primary" />
@@ -310,7 +443,9 @@ const SignUp = () => {
                     </label>
                  </div>
 
-                 <Button onClick={() => navigate('/home')}>Create Account</Button>
+                 <Button onClick={handleSignUp} disabled={isLoading}>
+                    {isLoading ? "Creating Account..." : "Create Account"}
+                 </Button>
 
                  <p className="text-center text-gray-500 dark:text-gray-400 text-sm mt-6">
                     Already have an account? <Link to="/signin" className="font-bold text-primary hover:underline">Sign In</Link>
@@ -387,8 +522,8 @@ const Home = () => {
             <header className="sticky top-0 z-40 bg-white/90 dark:bg-surface-dark/90 backdrop-blur-md px-4 py-3 flex items-center justify-between shadow-sm">
                 <div className="flex items-center gap-2">
                     <span className="material-symbols-outlined text-primary text-2xl">menu</span>
-                    <span className="text-xl font-bold text-primary flex items-center gap-1">
-                        <span className="material-symbols-outlined filled">play_circle</span> StreamMusic
+                    <span className="text-xl font-bold text-primary flex items-center gap-2">
+                        <img src="/logo_tab.png" alt="PhinAccords" className="h-8 w-8 object-contain" /> PhinAccords
                     </span>
                 </div>
                 <div className="flex gap-3 text-gray-500 dark:text-gray-400">
@@ -514,7 +649,10 @@ const Player = () => {
         <div className="bg-background-light dark:bg-background-dark min-h-screen flex flex-col">
             <header className="px-4 py-3 flex items-center justify-between">
                 <Link to="/home"><span className="material-symbols-outlined text-gray-700 dark:text-gray-300">expand_more</span></Link>
-                <div className="text-primary font-black italic text-2xl tracking-tighter">PhinAccords.</div>
+                <div className="flex items-center gap-2">
+                    <img src="/logo_tab.png" className="h-8 w-8 object-contain" />
+                    <span className="text-primary font-black italic text-2xl tracking-tighter">PhinAccords.</span>
+                </div>
                 <div className="flex items-center gap-4">
                      <span className="material-symbols-outlined text-gray-700 dark:text-gray-300">search</span>
                      <span className="material-symbols-outlined text-gray-700 dark:text-gray-300 filled text-2xl">account_circle</span>
@@ -619,7 +757,7 @@ const Profile = () => {
     return (
         <div className="pb-24 bg-background-light dark:bg-background-dark min-h-screen">
              <header className="px-4 py-3 flex items-center justify-between bg-white dark:bg-surface-dark shadow-sm">
-                <div className="flex items-center gap-2 text-primary font-bold text-xl"><span className="material-symbols-outlined">music_note</span> PhinAccords</div>
+                <div className="flex items-center gap-2 text-primary font-bold text-xl"><img src="/logo_tab.png" className="h-8 w-8 object-contain" /> PhinAccords</div>
                 <div className="font-bold text-gray-900 dark:text-white">Profile</div>
              </header>
 
