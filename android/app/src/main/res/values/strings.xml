@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">PhinAccords</string>
+    <string name="title_activity_main">PhinAccords</string>
+    <string name="package_name">com.phinaccords.app</string>
+    <string name="custom_url_scheme">com.phinaccords.app</string>
+</resources>
